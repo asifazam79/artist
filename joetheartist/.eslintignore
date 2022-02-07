@@ -1,0 +1,6 @@
+dist/
+**/scripts/*.js
+node_modules/
+/**/coverage/*
+/**/artifacts/*
+artifacts/
