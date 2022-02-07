@@ -4,7 +4,8 @@ import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex);
 const state = {
-        artistName: 'Cher'
+        searchArtist: '',
+        filterItems: ''
     },
     initialStateCopy = JSON.parse(JSON.stringify(state)),
     artist = new Vuex.Store({
@@ -15,6 +16,12 @@ const state = {
         ],
         state,
         mutations: {
+            setSearchArtist (state, payload) {
+                state.searchArtist = payload.searchArtist;
+            },
+            setFilterItems (state, payload) {
+                state.filterItems = payload.filterItems;
+            },
             resetState (state) {
                 Object.assign(state, initialStateCopy);
             }

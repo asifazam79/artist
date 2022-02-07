@@ -8,10 +8,9 @@
 ## 7. Please include one visualization/graph using any of the API’s previously mentioned {{ I am attaching the code I tried in Postman that didn't work as expected. Including it to let you know I have made an effort }}
 ## 8. Code should be reviewable in GitHub {{ Sending the link to the GitHub repo }}.
 
-## Note: I built the whole exercise in Vue.js. It is another variant of SPA like react. Project setup is done from scratch and I have added necessary areas like VueRouter and Vuex configuration although the state management was not required for this exercise. It is just for understanding the complete project if we want to build a complete website and not just a single web page. I have created some pages with dummy data for understanding. Hope it is not a problem. For obvious reasons. I have removed node_modules so npm install is required.
+## Note: I built the whole exercise in Vue.js. It is another variant of SPA like react. Project setup is done from scratch and I have added necessary areas like VueRouter and Vuex configuration although the state management was not required for this exercise. It is just for understanding the complete project if we want to build a complete website and not just a single web page. I have created some pages with dummy data for understanding. Hope it is not a problem. For obvious reasons. I have removed node_modules so npm install is required. Additional search functionality also added today where you can search for your favourite artist instead of hard coded 'Cher' term. Infinite scroll and Filter works as expected. Filter and search terms are state managed as well.
 
 ## Data I tried in Postman to get Visualization/Graph is below
-
 let template = `
     <style = "text/css">
     .apiWrapper,
