@@ -17,6 +17,11 @@ Steps to set-up
 4. Site is accessible on the localhost path with port number (as per your available system port). The url will pop-up on completion of npm run serve
 
 Data I tried in Postman to get Visualization/Graph is below
+
+
+
+
+
 let template = `
     <style = "text/css">
     .apiWrapper,
