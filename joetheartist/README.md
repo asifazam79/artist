@@ -8,7 +8,13 @@ All Below points are covered
 7. Please include one visualization/graph using any of the API’s previously mentioned {{ I am attaching the code I tried in Postman that didn't work as expected. Including it to let you know I have made an effort }}
 8. Code should be reviewable in GitHub {{ Sending the link to the GitHub repo }}.
 
-Note: I built the whole exercise in Vue.js. It is another variant of SPA like react. Project setup is done from scratch and I have added necessary areas like VueRouter and Vuex configuration although the state management was not required for this exercise. It is just for understanding the complete project if we want to build a complete website and not just a single web page. I have created some pages with dummy data for understanding. Hope it is not a problem. For obvious reasons. I have removed node_modules so npm install is required. Additional search functionality also added today where you can search for your favourite artist instead of hard coded 'Cher' term. Infinite scroll and Filter works as expected. Filter and search terms are state managed as well.
+Note: I built the whole exercise in Vue.js. It is another variant of SPA like React. Project setup is done from scratch and I have added necessary areas like VueRouter and Vuex configuration. I have created some pages with dummy data for understanding. Hope it is not a problem. For obvious reasons, I have removed node_modules so npm install is required. Additional search functionality also added where you can search for your favourite artist instead of hard coded 'Cher' term. Infinite scroll and Filter works as expected. Filter and search terms are state managed as well. As focus was on functionality more than presentation (explained by Jennie), Please don't mind the placeholders for images. I can assure you that I can fill them up with fancy images/svg's easily but tried to keep things simple
+
+Steps to set-up
+1. clone the repo on your local environment.
+2. npm install
+3. npm run serve
+4. Site is accessible on the localhost path with port number (as per your available system port). The url will pop-up on completion of npm run serve
 
 Data I tried in Postman to get Visualization/Graph is below
 let template = `
