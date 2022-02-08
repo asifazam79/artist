@@ -105,7 +105,6 @@ export default {
             window.onscroll = () => {
                 let bottomOfWindow = window.scrollY > (document.body.offsetHeight - window.outerHeight);
                 if (bottomOfWindow) {
-                    console.log(this.artistFurtherResults);
                     if (this.search !== '' || this.search !== undefined) {
                         axios.get('http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=' + this.search + '&api_key=182e05ac73d901d512e9e3839a94878c&format=json').then((response) => {
                             if (this.artistFurtherResults <= response.data.results.artistmatches.artist.length) {
