@@ -57,9 +57,6 @@ export default {
     mounted () {
         this.clearList();
     },
-    updated () {
-        this.getMoreArtists();
-    },
     data () {
         return {
             initialArtistList: [],
@@ -101,22 +98,26 @@ export default {
                 }).catch((error) => {
                     console.log(error);
                 });
+                this.getMoreArtists();
             }
         },
         async getMoreArtists () {
             window.onscroll = () => {
                 let bottomOfWindow = window.scrollY > (document.body.offsetHeight - window.outerHeight);
                 if (bottomOfWindow) {
-                    axios.get('http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=' + this.search + '&api_key=182e05ac73d901d512e9e3839a94878c&format=json').then((response) => {
-                        if (this.artistFurtherResults <= response.data.results.artistmatches.artist.length) {
-                            this.initialArtistList = response.data.results.artistmatches.artist.slice(this.artistFurtherResults, this.artistFurtherResults + 5);
-                            this.artistList.push(...this.initialArtistList.map(obj => obj));
-                            this.filteredArtistsList = this.artistList;
-                        }
-                        this.artistFurtherResults = this.artistFurtherResults + 5;
-                    }).catch((error) => {
-                        console.log(error);
-                    });
+                    console.log(this.artistFurtherResults);
+                    if (this.search !== '' || this.search !== undefined) {
+                        axios.get('http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=' + this.search + '&api_key=182e05ac73d901d512e9e3839a94878c&format=json').then((response) => {
+                            if (this.artistFurtherResults <= response.data.results.artistmatches.artist.length) {
+                                this.initialArtistList = response.data.results.artistmatches.artist.slice(this.artistFurtherResults, this.artistFurtherResults + 5);
+                                this.artistList.push(...this.initialArtistList.map(obj => obj));
+                                this.filteredArtistsList = this.artistList;
+                                this.artistFurtherResults = this.artistFurtherResults + 5;
+                            }
+                        }).catch((error) => {
+                            console.log(error);
+                        });
+                    }
                 }
             };
         },
@@ -142,6 +143,7 @@ export default {
             });
         },
         clearList () {
+            this.artistFurtherResults = 5;
             if (this.search === '') {
                 document.getElementById('artistUnorderedList').style.display = 'none';
             }
