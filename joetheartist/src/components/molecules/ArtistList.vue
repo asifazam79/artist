@@ -56,6 +56,8 @@ export default {
     name: 'ArtistList',
     mounted () {
         this.clearList();
+    },
+    updated () {
         this.getMoreArtists();
     },
     data () {
@@ -64,7 +66,8 @@ export default {
             artistList: [],
             filteredArtistsList: [],
             search: artist.state.searchArtist,
-            filter: artist.state.filterItems
+            filter: artist.state.filterItems,
+            artistFurtherResults: 5
         };
     },
     computed: {
@@ -92,11 +95,9 @@ export default {
             if (this.search !== '' || this.search !== undefined) {
                 document.getElementById('artistUnorderedList').style.display = 'block';
                 axios.get('http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=' + this.search + '&api_key=182e05ac73d901d512e9e3839a94878c&format=json').then((response) => {
-                    this.artistList = response.data.results.artistmatches.artist;
-                    this.initialArtistList = Object.fromEntries(
-                        Object.entries(this.artistList).slice(0, 5)
-                    );
-                    this.filteredArtistsList = this.initialArtistList;
+                    this.initialArtistList = response.data.results.artistmatches.artist.slice(0, 5);
+                    this.artistList = this.initialArtistList;
+                    this.filteredArtistsList = this.artistList;
                 }).catch((error) => {
                     console.log(error);
                 });
@@ -107,11 +108,12 @@ export default {
                 let bottomOfWindow = window.scrollY > (document.body.offsetHeight - window.outerHeight);
                 if (bottomOfWindow) {
                     axios.get('http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=' + this.search + '&api_key=182e05ac73d901d512e9e3839a94878c&format=json').then((response) => {
-                        this.artistList = response.data.results.artistmatches.artist;
-                        this.artistList = Object.fromEntries(
-                            Object.entries(this.artistList).slice(5, this.artistList.length)
-                        );
-                        this.filteredArtistsList = this.artistList;
+                        if (this.artistFurtherResults <= response.data.results.artistmatches.artist.length) {
+                            this.initialArtistList = response.data.results.artistmatches.artist.slice(this.artistFurtherResults, this.artistFurtherResults + 5);
+                            this.artistList.push(...this.initialArtistList.map(obj => obj));
+                            this.filteredArtistsList = this.artistList;
+                        }
+                        this.artistFurtherResults = this.artistFurtherResults + 5;
                     }).catch((error) => {
                         console.log(error);
                     });
