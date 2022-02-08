@@ -15,7 +15,7 @@
         </div>
         <ul id="artistUnorderedList">
             <template v-if="filteredArtistsList.length !== 0">
-                <li id="tagLine">Showing {{ artistList.length }} results for "{{ search }}"</li>
+                <li id="tagLine">Showing {{ artistList.length }} of {{ this.totalNumberOfResults }} results for "{{ search }}"</li>
                 <li v-for="(artist, index) in filteredArtistsList" :key="index">
                     <a class="toggle" href="#" @click.prevent="toggleList($event.target)">
                         <h3 class="artist-name">{{ artist.name }}</h3>
@@ -64,7 +64,8 @@ export default {
             filteredArtistsList: [],
             search: artist.state.searchArtist,
             filter: artist.state.filterItems,
-            artistFurtherResults: 5
+            artistFurtherResults: 5,
+            totalNumberOfResults: 0
         };
     },
     computed: {
@@ -89,6 +90,7 @@ export default {
     },
     methods: {
         async searchList () {
+            this.artistFurtherResults = 5;
             if (this.search !== '' || this.search !== undefined) {
                 document.getElementById('artistUnorderedList').style.display = 'block';
                 axios.get('http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=' + this.search + '&api_key=182e05ac73d901d512e9e3839a94878c&format=json').then((response) => {
@@ -107,6 +109,7 @@ export default {
                 if (bottomOfWindow) {
                     if (this.search !== '' || this.search !== undefined) {
                         axios.get('http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=' + this.search + '&api_key=182e05ac73d901d512e9e3839a94878c&format=json').then((response) => {
+                            this.totalNumberOfResults = response.data.results.artistmatches.artist.length;
                             if (this.artistFurtherResults <= response.data.results.artistmatches.artist.length) {
                                 this.initialArtistList = response.data.results.artistmatches.artist.slice(this.artistFurtherResults, this.artistFurtherResults + 5);
                                 this.artistList.push(...this.initialArtistList.map(obj => obj));
@@ -142,7 +145,6 @@ export default {
             });
         },
         clearList () {
-            this.artistFurtherResults = 5;
             if (this.search === '') {
                 document.getElementById('artistUnorderedList').style.display = 'none';
             }
